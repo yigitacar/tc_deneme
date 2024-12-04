@@ -5,5 +5,6 @@
 -bpf reference guide: https://docs.cilium.io/en/stable/reference-guides/bpf/index.html
 -bcc documentation: https://bcc.readthedocs.io/en/stable/
 -bcc source code: https://github.com/iovisor/bcc
+-classful queueing disciplines: https://tldp.org/HOWTO/Adv-Routing-HOWTO/lartc.qdisc.classful.html
 
 https://stackoverflow.com/questions/77193520/how-do-i-activate-a-bcc-ebpf-program-that-modifies-outgoing-egress-network-traff
