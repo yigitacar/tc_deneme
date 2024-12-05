@@ -4,14 +4,18 @@
 #include <linux/pkt_cls.h>
 
 
-int socket_filter(struct __sk_buff *skb) {
-    if (!is_icmp_ping_request((void *)(long)skb->data, (void *)(long)skb->data_end)) {
-        return 0; // Not an ICMP ping request
-    }
+int tc_drop_ping(struct __sk_buff *skb) {
+  bpf_trace_printk("[tc] ingress got packet\n");
 
-    // Log the detection
-    bpf_trace_printk("ICMP ping request detected\\n");
+  void *data = (void *)(long)skb->data;
+  void *data_end = (void *)(long)skb->data_end;
 
-    return -1;
+  if (is_icmp_ping_request(data, data_end)) {
+    struct iphdr *iph = data + sizeof(struct ethhdr);
+    struct icmphdr *icmp = data + sizeof(struct ethhdr) + sizeof(struct iphdr);
+    bpf_trace_printk("[tc] ICMP request for %x type %x\n", iph->daddr,
+                     icmp->type);
+    return TC_ACT_OK;
+  }
+  return TC_ACT_SHOT;
 }
-
