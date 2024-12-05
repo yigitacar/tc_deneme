@@ -19,7 +19,7 @@ idx = links[0]
 ## The special handle ffff:0 is reserved for the ingress qdisc.
 try:
     # handle could be :1 instead
-    ipr.tc(command="add-filter", kind="egress", index=idx, handle="1:")
+    ipr.tc(command="add-filter", kind="egress", index=idx, handle=":1")
 except:
     print("qdisc already exists")
 
