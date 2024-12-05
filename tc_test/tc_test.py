@@ -6,7 +6,7 @@ from time import sleep
 from pyroute2 import IPRoute
 
 b = BPF(src_file="tc_test.c")
-interface = "ens3"
+interface = "ens4"
 
 ipr = IPRoute()
 links = ipr.link_lookup(ifname=interface)
