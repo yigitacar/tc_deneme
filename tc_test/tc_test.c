@@ -5,7 +5,7 @@
 
 
 int tc_ack(struct __sk_buff *skb) {
-  bpf_trace_printk("[tc] ingress got packet\n");
+//  bpf_trace_printk("[tc] ingress got packet\n");
 
   void *data = (void *)(long)skb->data;
   void *data_end = (void *)(long)skb->data_end;

@@ -13,7 +13,7 @@ links = ipr.link_lookup(ifname=interface)
 idx = links[0]
 
 try:
-    ipr.tc("add", "ingress", idx, "ffff:")
+    ipr.tc("add", "egress", idx, ":1")
 except:
     print("qdisc ingress already exists")
 
