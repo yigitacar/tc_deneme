@@ -11,6 +11,8 @@ int tcpconnect(void *ctx) {
 int socket_filter(struct __sk_buff *skb) {
   unsigned char *cursor = 0;
 
+  bpf_trace_printk("tv off! \\n");
+
   struct ethernet_t *ethernet = cursor_advance(cursor, sizeof(*ethernet));
   // Look for IP packets
   if (ethernet->type != 0x0800) {

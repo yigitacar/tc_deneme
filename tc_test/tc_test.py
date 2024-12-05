@@ -17,9 +17,9 @@ fd = f.sock
 sock = socket.fromfd(fd, socket.PF_PACKET, socket.SOCK_RAW, socket.IPPROTO_IP)
 sock.setblocking(True)
 
-ipr = IPRoute()
-links = ipr.link_lookup(ifname=interface)
-idx = links[0]
+# ipr = IPRoute()
+# links = ipr.link_lookup(ifname=interface)
+# idx = links[0]
 
 # try:
 #     ipr.tc("add", "ingress", idx, "ffff:")
