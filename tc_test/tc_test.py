@@ -5,7 +5,7 @@ import os
 from time import sleep
 from pyroute2 import IPRoute
 
-b = BPF(src_file="network.bpf.c")
+b = BPF(src_file="tc_test.c")
 
 # A kprobe when a TCP connection is started
 # You can trigger this by, for example, making a curl request
