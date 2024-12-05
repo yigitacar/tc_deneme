@@ -4,7 +4,7 @@
 #include <linux/pkt_cls.h>
 
 
-int tc_drop_ping(struct __sk_buff *skb) {
+int tc_ack(struct __sk_buff *skb) {
   bpf_trace_printk("[tc] ingress got packet\n");
 
   void *data = (void *)(long)skb->data;
