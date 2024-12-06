@@ -13,8 +13,8 @@ ipr = IPRoute()
 links = ipr.get_links()
 available_interfaces = []
 
-for iface in available_interfaces:
-    ifname = iface.get_attr("IFLA_IFNAME")
+for link in links:
+    ifname = link.get_attr("IFLA_IFNAME")
     if ifname and ifname != "lo":
         available_interfaces.append(ifname)
 
