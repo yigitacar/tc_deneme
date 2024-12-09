@@ -1,8 +1,9 @@
 #include "tc_test.h"
+#define MAX_INTERFACE 16
 
 struct {
     __uint(type, BPF_MAP_TYPE_ARRAY);
-    __uint(max_entries, 16);
+    __uint(max_entries, MAX_INTERFACE);
     __type(key, __u32);
     __type(value, __u32);
 } interface_map SEC(".maps");
@@ -12,10 +13,21 @@ SEC("tc");
 int tc_distribute(struct __sk_buff *skb) {
 
 // TODO: loop through map elements and clone redirect each (challenge is finding the border)
+     for(__u32 i = 0; i < MAX_INTERFACE; i++) {
+        __u32 *out_ifindex = bpf_map_lookup_elem(&interface_map, &i);
 
-//bpf_clone_redirect(skb, ifindex);
+        if(!out_ifindex) {
+            bpf_printk("interface_map[%d] is null\n", i);
+        }
+        else {
+            bpf_printk("interface_map[%d] = %u\n", i, *out_ifindex);
+        }
+        return bpf_clone_redirect(skb, out_ifindex);
+     }
+     return TC_ACT_OK;
 }
 
+//bpf_clone_redirect(skb, ifindex);
 int tc_ack(struct __sk_buff *skb) {
 //  bpf_trace_printk("[tc] ingress got packet\n");
 

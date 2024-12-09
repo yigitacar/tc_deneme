@@ -9,5 +9,6 @@
 -classful queueing disciplines: https://tldp.org/HOWTO/Adv-Routing-HOWTO/lartc.qdisc.classful.html
 -bpf header file: https://github.com/torvalds/linux/blob/master/include/uapi/linux/bpf.h
 -ebpf for humans: https://medium.com/@ilaygilman
+-bcc version issue solution: https://github.com/iovisor/bcc/issues/3993
 
 https://stackoverflow.com/questions/77193520/how-do-i-activate-a-bcc-ebpf-program-that-modifies-outgoing-egress-network-traff
