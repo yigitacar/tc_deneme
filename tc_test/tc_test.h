@@ -1,10 +1,13 @@
+#ifndef TC_TEST_H
+#define TC_TEST_H
+
 #include <linux/icmp.h>
 #include <linux/if_ether.h>
 #include <linux/ip.h>
 #include <linux/bpf.h>
 #include <linux/pkt_cls.h>
 #include <linux/in.h>
-//#include <bpf/bpf_helpers.h>
+#include <bpf/bpf_helpers.h>
 #include <bcc/proto.h>
 
 static __always_inline unsigned short is_icmp_ping_request(void *data,
@@ -91,3 +94,5 @@ static __always_inline void update_icmp_type(struct __sk_buff *skb,
   bpf_l4_csum_replace(skb, ICMP_CSUM_OFF, old_type, new_type, 2);
   bpf_skb_store_bytes(skb, ICMP_TYPE_OFF, &new_type, sizeof(new_type), 0);
 }
+
+#endif
