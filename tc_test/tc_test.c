@@ -2,10 +2,10 @@
 #define MAX_INTERFACE 16
 
 struct {
-    __uint(type, BPF_MAP_TYPE_ARRAY);
-    __uint(max_entries, MAX_INTERFACE);
-    __type(key, __u32);
-    __type(value, __u32);
+    uint(type, BPF_MAP_TYPE_ARRAY);
+    uint(max_entries, MAX_INTERFACE);
+    type(key, u32);
+    type(value, u32);
 } interface_map SEC(".maps");
 
 /*
