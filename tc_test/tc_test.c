@@ -8,11 +8,11 @@ struct {
     __type(value, __u32);
 } interface_map SEC(".maps");
 
+/*
 SEC("tc");
 
 int tc_distribute(struct __sk_buff *skb) {
 
-// TODO: loop through map elements and clone redirect each (challenge is finding the border)
      for(__u32 i = 0; i < MAX_INTERFACE; i++) {
         __u32 *out_ifindex = bpf_map_lookup_elem(&interface_map, &i);
 
@@ -26,6 +26,7 @@ int tc_distribute(struct __sk_buff *skb) {
      }
      return TC_ACT_OK;
 }
+*/
 
 //bpf_clone_redirect(skb, ifindex);
 int tc_ack(struct __sk_buff *skb) {

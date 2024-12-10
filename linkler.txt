@@ -1,5 +1,6 @@
 -bcc tutorial: https://eunomia.dev/tutorials/1-helloworld/#installing-the-necessary-software-and-tools
--ubuntu bcc setup: https://thegraynode.io/posts/bpf_dev_env/
+-ubuntu bpf setup: https://thegraynode.io/posts/bpf_dev_env/
+-ubuntu bcc setup: https://www.flamingbytes.com/blog/how-to-install-bcc-on-ubuntu-22-04/
 -video example: https://www.youtube.com/watch?v=lrSExTfS-iQ&list=PLDX-f9ry9CQIASlBBlrlY06Tgnh4gLThn&index=1
 -tc filters: https://fedepaol.github.io/blog/2023/04/06/ebpf-tc-filters-for-egress-traffic/
 -bpf reference guide: https://docs.cilium.io/en/stable/reference-guides/bpf/index.html
