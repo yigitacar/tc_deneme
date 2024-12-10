@@ -1,13 +1,13 @@
 #include "tc_test.h"
 #define MAX_INTERFACE 16
 
-struct {
-    uint(type, BPF_MAP_TYPE_ARRAY);
-    uint(max_entries, MAX_INTERFACE);
-    type(key, u32);
-    type(value, u32);
-} interface_map SEC(".maps");
-
+struct interface {
+    __uint(type, BPF_MAP_TYPE_ARRAY);
+    __uint(max_entries, MAX_INTERFACE);
+    __type(key, u32);
+    __type(value, u32);
+};
+// interface_map SEC(".maps")
 /*
 SEC("tc");
 
