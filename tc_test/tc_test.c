@@ -1,5 +1,4 @@
 #include "tc_test.h"
-#include <bpf/bpf_helpers.h>
 #define MAX_INTERFACE 16
 
 struct {

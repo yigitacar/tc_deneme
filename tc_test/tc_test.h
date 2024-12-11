@@ -7,7 +7,7 @@
 #include <linux/bpf.h>
 #include <linux/pkt_cls.h>
 #include <linux/in.h>
-
+#include <bpf/bpf_helpers.h>
 //#include <bcc/proto.h>
 
 static __always_inline unsigned short is_icmp_ping_request(void *data,
