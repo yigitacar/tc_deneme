@@ -1,5 +1,7 @@
 #include "tc_test.h"
+#include <bpf/bpf_helpers.h>
 #define MAX_INTERFACE 16
+
 
 struct {
         __uint(type, BPF_MAP_TYPE_ARRAY);
