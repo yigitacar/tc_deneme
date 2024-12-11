@@ -3,8 +3,8 @@
 
 struct {
         __uint(type, BPF_MAP_TYPE_ARRAY);
-        __type(key, u32); //__u32
-        __type(value, u32); //__u32
+        __type(key, __u32); //__u32
+        __type(value, __u32); //__u32
         __uint(max_entries, MAX_INTERFACE);
 } interface_map SEC(".maps");
 
