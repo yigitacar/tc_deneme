@@ -5,7 +5,7 @@ import os
 from time import sleep
 from pyroute2 import IPRoute
 
-b = BPF(src_file="tc_test.c")
+b = BPF(src_file="tc_test.c", cflags=["-I/usr/include/bpf"])
 
 ## get available interfaces
 ipr = IPRoute()
