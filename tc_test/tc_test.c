@@ -1,4 +1,4 @@
-#include "tc_test.h"
+//#include "tc_test.h"
 #include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
 #define MAX_INTERFACE 16
@@ -30,6 +30,7 @@ int tc_distribute(struct __sk_buff *skb) {
 */
 
 //bpf_clone_redirect(skb, ifindex);
+/*
 int tc_ack(struct __sk_buff *skb) {
 //  bpf_trace_printk("[tc] ingress got packet\n");
 
@@ -45,7 +46,7 @@ int tc_ack(struct __sk_buff *skb) {
   }
   return TC_ACT_SHOT;
 }
-
+*/
 // Redirects the packet to a chosen interface, could use clone_redirect instead
 // 0 gives the index of chosen interface
 // a third input parameter could have been used if it was egress
