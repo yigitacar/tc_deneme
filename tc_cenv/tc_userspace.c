@@ -1,16 +1,16 @@
-#include <stdio.h>
 #include <bpf/libbpf.h>
 #include <bpf/bpf.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#include <net/if.h>
 
 #define IFACE "ens3" // Replace with your network interface
 #define BPF_PROG_PATH "/path/to/your/tc_program.o" // Path to your compiled eBPF program
 
-int main()
-{
+int main() {
     struct bpf_object *obj;
     int prog_fd, ifindex;
     int ret;
@@ -28,6 +28,7 @@ int main()
     ret = bpf_object__load(obj);
     if (ret) {
         fprintf(stderr, "Failed to load eBPF object: %s\n", strerror(-ret));
+        bpf_object__close(obj);
         return 1;
     }
 
@@ -35,12 +36,14 @@ int main()
     struct bpf_program *prog = bpf_object__find_program_by_name(obj, "tc_egress_prog"); // Replace with your program's name
     if (!prog) {
         fprintf(stderr, "Failed to find eBPF program by name\n");
+        bpf_object__close(obj);
         return 1;
     }
 
     prog_fd = bpf_program__fd(prog);
     if (prog_fd < 0) {
         fprintf(stderr, "Failed to get file descriptor for eBPF program\n");
+        bpf_object__close(obj);
         return 1;
     }
 
@@ -48,6 +51,7 @@ int main()
     ifindex = if_nametoindex(IFACE);
     if (!ifindex) {
         fprintf(stderr, "Failed to get interface index for %s: %s\n", IFACE, strerror(errno));
+        bpf_object__close(obj);
         return 1;
     }
 
@@ -58,6 +62,7 @@ int main()
     ret = bpf_tc_hook_create(&hook);
     if (ret && ret != -EEXIST) {
         fprintf(stderr, "Failed to create tc hook: %s\n", strerror(-ret));
+        bpf_object__close(obj);
         return 1;
     }
 
@@ -70,6 +75,8 @@ int main()
     ret = bpf_tc_attach(&hook, &opts);
     if (ret) {
         fprintf(stderr, "Failed to attach eBPF program: %s\n", strerror(-ret));
+        bpf_tc_hook_destroy(&hook);
+        bpf_object__close(obj);
         return 1;
     }
 
