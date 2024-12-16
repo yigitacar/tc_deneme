@@ -27,5 +27,8 @@ for i, ifindex in enumerate(available_interfaces):
 print("Available interfaces:", available_interfaces)
 print("Interface map:", b)
 
+# fi = b.load_func("tc_distribute", BPF.SCHED_CLS)
+## TODO: add tc filter or a command if necessary
+
 b.trace_print()
 
