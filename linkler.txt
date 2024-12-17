@@ -14,6 +14,10 @@
 -ebpf tutorials: https://eunomia.dev/tutorials/1-helloworld/#installing-the-necessary-software-and-tools
 -bpf implementation source: https://addozhang.medium.com/accelerate-network-packets-transmission-with-ebpf-cec744c6b8b5
 			    https://addozhang.medium.com/exploring-ebpf-implementation-through-linux-source-code-8220897a9f2e
+-sample project: https://github.com/addozhang/ebpf-sockops
+-ebpf tc filter for egress traffic: https://fedepaol.github.io/blog/2023/04/06/ebpf-tc-filters-for-egress-traffic/
+-tc direct action mode for ebpf: https://qmonnet.github.io/whirl-offload/2020/04/11/tc-bpf-direct-action/
+
 
 https://stackoverflow.com/questions/77193520/how-do-i-activate-a-bcc-ebpf-program-that-modifies-outgoing-egress-network-traff
 
