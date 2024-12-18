@@ -31,7 +31,7 @@ int tc_egress_multiplicate(struct __sk_buff *skb) {
 
     // Drop the original packet after cloning (optional)
     //return TC_ACT_SHOT;
-	return TC_ACT_OK;
+	return 1;
 }
 
 char LICENSE[] SEC("license") = "GPL";
