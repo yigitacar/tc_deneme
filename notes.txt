@@ -1,1 +1,5 @@
-clang -I/usr/include/bpf -O2 -target bpf -c your_program.c -o your_program.o
+-old: clang -I/usr/include/bpf -O2 -target bpf -c your_program.c -o your_program.o
+-current compilation:
+	clang -O2 -g -target bpf -c redirect_egress.c -o redirect_egress.o
+	gcc -o load_redirect load_redirect.c -lbpf
+	sudo ./load_redirect

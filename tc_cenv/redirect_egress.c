@@ -15,9 +15,7 @@ struct {
 	__uint(max_entries, MAX_INTERFACE);
 } interface_map SEC(".maps");
 
-SEC("tc");
-
-
+SEC("tc")
 int tc_egress_multiplicate(struct __sk_buff *skb) {
     __u32 key = 0;
     __u32 *ifindex;
@@ -32,8 +30,8 @@ int tc_egress_multiplicate(struct __sk_buff *skb) {
     }
 
     // Drop the original packet after cloning (optional)
-    return TC_ACT_SHOT;
-	//return TC_ACT_OK;
+    //return TC_ACT_SHOT;
+	return TC_ACT_OK;
 }
 
 char LICENSE[] SEC("license") = "GPL";
