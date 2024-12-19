@@ -6,3 +6,85 @@
 
 
 bpftool prog show
+
+libbpf: load bpf program failed: Invalid argument
+libbpf: -- BEGIN DUMP LOG ---
+libbpf:
+; int tc_egress_multiplicate(struct __sk_buff *skb) {
+0: (bf) r6 = r1
+1: (b7) r1 = 0
+;
+2: (63) *(u32 *)(r10 -4) = r1
+last_idx 2 first_idx 0
+regs=2 stack=0 before 1: (b7) r1 = 0
+3: (b7) r7 = 10
+4: (05) goto pc+8
+; return TC_ACT_OK;
+13: (bf) r2 = r10
+;
+14: (07) r2 += -4
+; ifindex = bpf_map_lookup_elem(&interface_map, &key);
+15: (18) r1 = 0xffff9cb683ef3000
+17: (85) call bpf_map_lookup_elem#1
+; if (ifindex && *ifindex > 0) {
+18: (15) if r0 == 0x0 goto pc-14
+ R0=map_value(id=0,off=0,ks=4,vs=4,imm=0) R6=ctx(id=0,off=0,imm=0) R7=inv10 R10=fp0 fp-8=mmmm????
+; if (ifindex && *ifindex > 0) {
+19: (61) r2 = *(u32 *)(r0 +0)
+ R0=map_value(id=0,off=0,ks=4,vs=4,imm=0) R6=ctx(id=0,off=0,imm=0) R7=inv10 R10=fp0 fp-8=mmmm????
+; if (ifindex && *ifindex > 0) {
+20: (15) if r2 == 0x0 goto pc-16
+ R0=map_value(id=0,off=0,ks=4,vs=4,imm=0) R2_w=inv(id=0,umax_value=4294967295,var_off=(0x0; 0xffffffff)) R6=ctx(id=0,off=0,imm=0) R7=inv10 R10=fp0 fp-8=mmmm????
+; bpf_clone_redirect(skb, *ifindex, 0);
+21: (bf) r1 = r6
+22: (b7) r3 = 0
+23: (85) call bpf_clone_redirect#13
+24: (05) goto pc-20
+; for (key = 0; key < MAX_INTERFACE; key++) {
+5: (61) r1 = *(u32 *)(r10 -4)
+6: (07) r1 += 1
+;
+7: (63) *(u32 *)(r10 -4) = r1
+; for (key = 0; key < MAX_INTERFACE; key++) {
+8: (67) r1 <<= 32
+9: (77) r1 >>= 32
+; for (key = 0; key < MAX_INTERFACE; key++) {
+10: (2d) if r7 > r1 goto pc+2
+
+from 10 to 13: R0=inv(id=0) R1=inv(id=0,umax_value=9,var_off=(0x0; 0xf)) R6=ctx(id=0,off=0,imm=0) R7=inv10 R10=fp0 fp-8=mmmm????
+13: (bf) r2 = r10
+;
+14: (07) r2 += -4
+; ifindex = bpf_map_lookup_elem(&interface_map, &key);
+15: (18) r1 = 0xffff9cb683ef3000
+17: (85) call bpf_map_lookup_elem#1
+; if (ifindex && *ifindex > 0) {
+18: (15) if r0 == 0x0 goto pc-14
+ R0_w=map_value(id=0,off=0,ks=4,vs=4,imm=0) R6=ctx(id=0,off=0,imm=0) R7=inv10 R10=fp0 fp-8=mmmm????
+; if (ifindex && *ifindex > 0) {
+19: (61) r2 = *(u32 *)(r0 +0)
+ R0_w=map_value(id=0,off=0,ks=4,vs=4,imm=0) R6=ctx(id=0,off=0,imm=0) R7=inv10 R10=fp0 fp-8=mmmm????
+; if (ifindex && *ifindex > 0) {
+20: (15) if r2 == 0x0 goto pc-16
+ R0=map_value(id=0,off=0,ks=4,vs=4,imm=0) R2=inv(id=0,umax_value=4294967295,var_off=(0x0; 0xffffffff)) R6=ctx(id=0,off=0,imm=0) R7=inv10 R10=fp0 fp-8=mmmm????
+; bpf_clone_redirect(skb, *ifindex, 0);
+21: (bf) r1 = r6
+22: (b7) r3 = 0
+23: (85) call bpf_clone_redirect#13
+24: (05) goto pc-20
+; for (key = 0; key < MAX_INTERFACE; key++) {
+5: (61) r1 = *(u32 *)(r10 -4)
+6: (07) r1 += 1
+;
+7: (63) *(u32 *)(r10 -4) = r1
+; for (key = 0; key < MAX_INTERFACE; key++) {
+8: (67) r1 <<= 32
+9: (77) r1 >>= 32
+; for (key = 0; key < MAX_INTERFACE; key++) {
+infinite loop detected at insn 10
+processed 41 insns (limit 1000000) max_states_per_insn 1 total_states 3 peak_states 3 mark_read 2
+
+libbpf: -- END LOG --
+libbpf: failed to load program 'tc_egress_multiplicate'
+libbpf: failed to load object 'redirect_egress.o'
+Error loading BPF program.

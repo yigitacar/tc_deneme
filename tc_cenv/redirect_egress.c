@@ -22,8 +22,9 @@ int tc_egress_multiplicate(struct __sk_buff *skb) {
 	
 //	#pragma unroll
     // Loop through all entries in the interface_map
-    for (key = 0; key < MAX_INTERFACE; key++) {
-        ifindex = bpf_map_lookup_elem(&interface_map, &key);
+    for (i = 0; i < MAX_INTERFACE; i++) {
+        key++;
+		ifindex = bpf_map_lookup_elem(&interface_map, &key);
 		if (!ifindex)
 			continue;
         if (ifindex && *ifindex > 0) {
