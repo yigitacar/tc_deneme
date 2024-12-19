@@ -38,9 +38,9 @@ int main(int argc, char **argv) {
     map_fd = bpf_map__fd(map);
 
     // Attach the BPF program to tc egress
-    system("tc qdisc add dev eth0 clsact");
+    system("tc qdisc add dev ens3 clsact");
     char cmd[256];
-    snprintf(cmd, sizeof(cmd), "tc filter add dev eth0 egress bpf da fd %d", prog_fd);
+    snprintf(cmd, sizeof(cmd), "tc filter add dev ens3 egress bpf da fd %d", prog_fd);
     system(cmd);
 
     // Update the interface_map with desired interface indices
