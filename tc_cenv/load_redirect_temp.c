@@ -56,9 +56,11 @@ int main() {
         return 1;
     }
 
-    // Set up the tc hook
-    hook.ifindex = ifindex;
-    hook.attach_point = BPF_TC_EGRESS; // Change to BPF_TC_INGRESS for ingress hook
+	// Set up the tc hook
+	memset(&hook, 0, sizeof(hook)); // Ensure the structure is zeroed out
+	hook.sz = sizeof(struct bpf_tc_hook); // Set the size of the structure
+	hook.ifindex = ifindex;
+	hook.attach_point = BPF_TC_EGRESS; // Change to BPF_TC_INGRESS for ingress hook
 
     ret = bpf_tc_hook_create(&hook);
     if (ret && ret != -EEXIST) {
