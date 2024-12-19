@@ -32,3 +32,7 @@ print("Interface map:", b)
 
 b.trace_print()
 
+# bcc ve libbpf
+# -aldığım hata kodları
+# -.py (userspace) ve .c (ebpf) kodlarım
+# -bcc ve libbpf kaynak kodları
