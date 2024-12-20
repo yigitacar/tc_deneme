@@ -14,5 +14,11 @@ Unable to parse bpf command line
 
 
 load_redirect_temp ERROR:
-libbpf: bpf tc_hook size(0) is too small
-Failed to create tc hook: Invalid argument
+libbpf: bpf_tc_opts size (0) is too small
+Failed to attach eBPF program: Invalid argument
+
+bpf lifecycle:
+-open phase
+-load phase
+-attachment phase
+-tear down phase

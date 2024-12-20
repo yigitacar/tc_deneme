@@ -6,6 +6,8 @@
 #include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
 
+#define TC_ACT_OK 0
+#define TC_ACT_SHOT 1
 #define MAX_INTERFACE 10
 
 struct {
@@ -33,8 +35,7 @@ int tc_egress_multiplicate(struct __sk_buff *skb) {
     }
 
     // Drop the original packet after cloning (optional)
-    //return TC_ACT_SHOT;
-	return 1;
+    return TC_ACT_OK;
 }
 
 char LICENSE[] SEC("license") = "GPL";
