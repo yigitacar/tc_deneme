@@ -2,10 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define BPF_PROG_PATH "tc_kern.o" // Path to compiled eBPF program
+
 int main(int argc, char **argv)
 {
 	struct tc_kern *skel;
 	int err;
+	
+	/* Get interface names */
+	/* Update interface map */
 	
 	/* Create and open BPF application */
     skel = tc_kern__open();

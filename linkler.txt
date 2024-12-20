@@ -17,7 +17,7 @@
 -sample project: https://github.com/addozhang/ebpf-sockops
 -ebpf tc filter for egress traffic: https://fedepaol.github.io/blog/2023/04/06/ebpf-tc-filters-for-egress-traffic/
 -tc direct action mode for ebpf: https://qmonnet.github.io/whirl-offload/2020/04/11/tc-bpf-direct-action/
-
+-net/if.h docu: https://pubs.opengroup.org/onlinepubs/009695399/basedefs/net/if.h.html
 
 https://stackoverflow.com/questions/77193520/how-do-i-activate-a-bcc-ebpf-program-that-modifies-outgoing-egress-network-traff
 
