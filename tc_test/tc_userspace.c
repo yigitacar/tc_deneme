@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "tc_kern.skel.h"
 
 #define BPF_PROG_PATH "tc_kern.o" // Path to compiled eBPF program
 
