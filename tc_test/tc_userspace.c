@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Failed to get file descriptor for 'interface_map'\n");
 		return 1;
 	}
-	__u32 value = if_nametoindex(card_data[i]);
+	__u32 value = if_nametoindex(card_data[0]);
 	
 	/* Update interface map */
 /*	key = 0;
