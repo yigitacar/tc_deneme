@@ -33,7 +33,6 @@ int main(int argc, char **argv)
         free(card_data[i]);
     }
     free(card_data);
-    return 0;	
 	
 	/* Update interface map */
 	
@@ -63,6 +62,7 @@ int main(int argc, char **argv)
 	/*  
 	tc_kern__destroy(skel);
 	*/
+	return 0;
 }
 
 
@@ -81,21 +81,32 @@ char** getnics(int* count)
         if (ifa->ifa_addr == NULL)
             continue;
 
-        // Exclude the loopback interface
+        // Exclude loopback interface
         if (strcmp(ifa->ifa_name, "lo") == 0)
             continue;
-		
-		printf("Adding interface: %s\n", ifa->ifa_name);
-        // Add the interface name to the list
-        details = (char**) realloc(details, (index + 1) * sizeof(char*));
-        details[index] = malloc(strlen(ifa->ifa_name) + 1);
-        strcpy(details[index++], ifa->ifa_name);
+
+        // Check if interface is already in the list
+        int duplicate = 0;
+        for (int i = 0; i < index; i++) {
+            if (strcmp(details[i], ifa->ifa_name) == 0) {
+                duplicate = 1;
+                break;
+            }
+        }
+
+        // Add to list if not a duplicate
+        if (!duplicate) {
+            details = (char**) realloc(details, (index + 1) * sizeof(char*));
+            details[index] = malloc(strlen(ifa->ifa_name) + 1);
+            strcpy(details[index++], ifa->ifa_name);
+        }
     }
 
     *count = index;
     freeifaddrs(ifaddr);
     return details;
 }
+
 
 
 /*
