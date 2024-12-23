@@ -24,6 +24,8 @@ int main(int argc, char **argv)
 	
 	/* Get interface names */
 	char** card_data = getnics(&count);
+	
+	/* Print extracted interface names */
     for (int i = 0; i < count; i++) {
         printf("%s\n", card_data[i]);
     }
@@ -67,6 +69,40 @@ int main(int argc, char **argv)
 char** getnics(int* count)
 {
     struct ifaddrs *ifaddr, *ifa;
+    char** details = NULL;
+    int index = 0;
+
+    if (getifaddrs(&ifaddr) == -1) {
+        perror("getifaddrs");
+        exit(EXIT_FAILURE);
+    }
+
+    for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
+        if (ifa->ifa_addr == NULL)
+            continue;
+
+        // Exclude the loopback interface
+        if (strcmp(ifa->ifa_name, "lo") == 0)
+            continue;
+
+        // Add the interface name to the list
+        details = (char**) realloc(details, (index + 1) * sizeof(char*));
+        details[index] = malloc(strlen(ifa->ifa_name) + 1);
+        strcpy(details[index++], ifa->ifa_name);
+    }
+
+    *count = index;
+    freeifaddrs(ifaddr);
+    return details;
+}
+
+
+/*
+char** getnics(int* count)
+{
+	// TODO: exclude loopback
+	// TODO: don't include ip addresses
+    struct ifaddrs *ifaddr, *ifa;
     int family, s;
     char host[NI_MAXHOST];
     char** details = NULL;
@@ -104,4 +140,4 @@ char** getnics(int* count)
     *count = index;
     freeifaddrs(ifaddr);
     return details;
-}
+}*/
