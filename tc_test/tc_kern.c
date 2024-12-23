@@ -12,4 +12,25 @@ struct {
 	__uint(max_entries, MAX_INTERFACE);
 } interface_map SEC(".maps");
 
+SEC("classifier")
+int tc_egress_multiplicate(struct __sk_buff *skb) {
+    __u32 key = 0;
+    __u32 *ifindex;
+	
+    // Loop through all entries in the interface_map
+    for (int i = 0; i < MAX_INTERFACE; i++) {
+        ifindex = bpf_map_lookup_elem(&interface_map, &key);
+		if (!ifindex)
+			continue;
+        if (ifindex && *ifindex > 0) {
+            // Redirect the packet to the interface specified in the map
+            bpf_clone_redirect(skb, *ifindex, 0);
+        }
+		key++;
+    }
+
+    // Drop the original packet after cloning (optional)
+    return TC_ACT_OK;
+}
+
 char LICENSE[] SEC("license") = "GPL";

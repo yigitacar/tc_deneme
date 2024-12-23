@@ -52,12 +52,24 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Failed to get file descriptor for 'interface_map'\n");
 		return 1;
 	}
-	__u32 value = if_nametoindex(card_data[0]);
 	
 	/* Update interface map */
-/*	key = 0;
-	bpf_map_update_elem(bpf_map__fd(skel->interface_map), &key, card_data[0], BPF_ANY);
-*/	
+	for (int i = 0; i < count; i++) {
+		__u32 key = i;  // Custom key, e.g., array index
+		__u32 value = if_nametoindex(card_data[i]);  // System-assigned ifindex
+		if (value == 0) {
+			fprintf(stderr, "Failed to get ifindex for interface %s\n", card_data[i]);
+			continue;
+		}
+    
+		printf("Updating map: key=%u, ifindex=%u (interface=%s)\n", key, value, card_data[i]);
+		err = bpf_map_update_elem(map_fd, &key, &value, BPF_ANY);
+		if (err) {
+			fprintf(stderr, "Failed to update map for key %u, interface %s\n", key, card_data[i]);
+			return 1;
+		}
+	}
+	
 	/* Attach tracepoint */
     err = tc_kern__attach(skel);
     if (err) {
