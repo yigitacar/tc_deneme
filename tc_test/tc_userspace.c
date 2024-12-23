@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 
 	/* Update interface map */
 	key = 0;
-	bpf_map_update_elem(bpf_map__fd(skel->maps.interface_map), &key, card_data[0], BPF_ANY)
+	bpf_map_update_elem(bpf_map__fd(skel->interface_map), &key, card_data[0], BPF_ANY);
 	
 	/* Attach tracepoint */
     err = tc_kern__attach(skel);
