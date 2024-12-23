@@ -19,9 +19,7 @@ char** getnics(int* count);
 int main(int argc, char **argv)
 {
 	struct tc_kern *skel;
-	struct bpf_map *map;
-    int map_fd;
-	int err, key;
+	int err, key, map_fd;
 	int count = 0;
 	
 	/* Get interface names */
@@ -49,29 +47,15 @@ int main(int argc, char **argv)
     //    goto cleanup;
     }	
 
-    // Find the map by its name
-    map = bpf_object__find_map_by_name(skel, "interface_map");
-    if (!map) {
-        fprintf(stderr, "Failed to find map 'interface_map'\n");
-        bpf_object__close(skel);
-        return 1;
-    }
-
-    // Get the map's file descriptor
-    map_fd = bpf_map__fd(map);
-    if (map_fd < 0) {
-        fprintf(stderr, "Failed to get file descriptor for map 'interface_map'\n");
-        bpf_object__close(skel);
-        return 1;
-    }
-
-    printf("Map file descriptor: %d\n", map_fd);
-
+	map_fd = bpf_map__fd(skel->maps.interface_map);
+	if (map_fd < 0) {
+		fprintf(stderr, "Failed to get file descriptor for 'interface_map'\n");
+		return 1;
+	}
 	/* Update interface map */
 /*	key = 0;
 	bpf_map_update_elem(bpf_map__fd(skel->interface_map), &key, card_data[0], BPF_ANY);
-*/
-	
+*/	
 	/* Attach tracepoint */
     err = tc_kern__attach(skel);
     if (err) {
