@@ -19,7 +19,7 @@ char** getnics(int* count);
 int main(int argc, char **argv)
 {
 	struct tc_kern *skel;
-	int err;
+	int err, key;
 	int count = 0;
 	
 	/* Get interface names */
@@ -32,9 +32,11 @@ int main(int argc, char **argv)
     for (int i = 0; i < count; i++) { 
         free(card_data[i]);
     }
-    free(card_data);
-	
+
 	/* Update interface map */
+	key = 0;
+	bpf_map_update_elem(interface_map, &key, char_data[0], BPF_ANY)
+	
 	
 	/* Create and open BPF application */
     skel = tc_kern__open();
@@ -62,6 +64,8 @@ int main(int argc, char **argv)
 	/*  
 	tc_kern__destroy(skel);
 	*/
+	
+    free(card_data);
 	return 0;
 }
 
@@ -106,50 +110,3 @@ char** getnics(int* count)
     freeifaddrs(ifaddr);
     return details;
 }
-
-
-
-/*
-char** getnics(int* count)
-{
-	// TODO: exclude loopback
-	// TODO: don't include ip addresses
-    struct ifaddrs *ifaddr, *ifa;
-    int family, s;
-    char host[NI_MAXHOST];
-    char** details = NULL;
-    char* combined = NULL;
-    int index = 0;
-    
-
-    if (getifaddrs(&ifaddr) == -1) {
-        perror("getifaddrs");
-        exit(EXIT_FAILURE);
-    }
-
-    for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
-        if (ifa->ifa_addr == NULL)
-            continue;
-
-        family = ifa->ifa_addr->sa_family;
-        if (family == AF_INET || family == AF_INET6) {
-            s = getnameinfo(ifa->ifa_addr,
-                    (family == AF_INET) ? sizeof(struct sockaddr_in) :
-                                            sizeof(struct sockaddr_in6),
-                    host, NI_MAXHOST,
-                    NULL, 0, NI_NUMERICHOST);
-            combined = malloc((strlen(ifa->ifa_name) + strlen(host) + 1) * sizeof(char*));
-					   //malloc((strlen(ifa->ifa_name) + strlen(host) + 2) * sizeof(char));
-            strcpy(combined, ifa->ifa_name);
-            strcat(combined, ":");
-            strcat(combined, host);
-            details = (char**) realloc(details, (index + 1) * sizeof(char*));
-            details[index] = malloc(strlen(combined) + 1);
-            strcpy(details[index++], combined);
-            free(combined);
-        } 
-    }
-    *count = index;
-    freeifaddrs(ifaddr);
-    return details;
-}*/
