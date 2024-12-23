@@ -19,6 +19,8 @@ char** getnics(int* count);
 int main(int argc, char **argv)
 {
 	struct tc_kern *skel;
+	struct bpf_map *map;
+    int map_fd;
 	int err, key;
 	int count = 0;
 	
