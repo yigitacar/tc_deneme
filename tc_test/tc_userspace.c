@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 	*/
 }
 
-/*
+
 char** getnics(int* count)
 {
     struct ifaddrs *ifaddr, *ifa;
@@ -101,4 +101,3 @@ char** getnics(int* count)
     freeifaddrs(ifaddr);
     return details;
 }
-*/
