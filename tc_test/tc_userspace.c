@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	
 	/* Print extracted interface names */
     for (int i = 0; i < count; i++) {
-        printf("%s\n", card_data[i]);
+        //printf("%s\n", card_data[i]);
     }
     for (int i = 0; i < count; i++) { 
         free(card_data[i]);
@@ -84,7 +84,8 @@ char** getnics(int* count)
         // Exclude the loopback interface
         if (strcmp(ifa->ifa_name, "lo") == 0)
             continue;
-
+		
+		printf("Adding interface: %s\n", ifa->ifa_name);
         // Add the interface name to the list
         details = (char**) realloc(details, (index + 1) * sizeof(char*));
         details[index] = malloc(strlen(ifa->ifa_name) + 1);
