@@ -33,11 +33,6 @@ int main(int argc, char **argv)
         free(card_data[i]);
     }
 
-	/* Update interface map */
-	key = 0;
-	bpf_map_update_elem(interface_map, &key, char_data[0], BPF_ANY)
-	
-	
 	/* Create and open BPF application */
     skel = tc_kern__open();
     if (!skel) {
@@ -52,6 +47,9 @@ int main(int argc, char **argv)
     //    goto cleanup;
     }	
 
+	/* Update interface map */
+	key = 0;
+	bpf_map_update_elem(bpf_map__fd(skel->maps.interface_map), &key, card_data[0], BPF_ANY)
 	
 	/* Attach tracepoint */
     err = tc_kern__attach(skel);
