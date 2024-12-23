@@ -15,7 +15,6 @@
 
 char** getnics(int* count);
 
-
 int main(int argc, char **argv)
 {
 	struct tc_kern *skel;
