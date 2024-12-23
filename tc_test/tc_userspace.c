@@ -29,9 +29,7 @@ int main(int argc, char **argv)
     for (int i = 0; i < count; i++) {
         printf("%s\n", card_data[i]);
     }
-    for (int i = 0; i < count; i++) { 
-        free(card_data[i]);
-    }
+
 
 	/* Create and open BPF application */
     skel = tc_kern__open();
@@ -81,6 +79,10 @@ int main(int argc, char **argv)
 	/*  
 	tc_kern__destroy(skel);
 	*/
+
+    for (int i = 0; i < count; i++) { 
+        free(card_data[i]);
+    }
 	
     free(card_data);
 	return 0;
