@@ -13,6 +13,9 @@
 
 #define BPF_PROG_PATH "tc_kern.o" // Path to compiled eBPF program
 
+char** getnics(int* count);
+
+
 int main(int argc, char **argv)
 {
 	struct tc_kern *skel;
@@ -88,6 +91,7 @@ char** getnics(int* count)
                     host, NI_MAXHOST,
                     NULL, 0, NI_NUMERICHOST);
             combined = malloc((strlen(ifa->ifa_name) + strlen(host) + 1) * sizeof(char*));
+					   //malloc((strlen(ifa->ifa_name) + strlen(host) + 2) * sizeof(char));
             strcpy(combined, ifa->ifa_name);
             strcat(combined, ":");
             strcat(combined, host);
