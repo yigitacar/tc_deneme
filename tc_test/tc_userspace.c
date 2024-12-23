@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	
 	/* Print extracted interface names */
     for (int i = 0; i < count; i++) {
-        //printf("%s\n", card_data[i]);
+        printf("%s\n", card_data[i]);
     }
     for (int i = 0; i < count; i++) { 
         free(card_data[i]);
