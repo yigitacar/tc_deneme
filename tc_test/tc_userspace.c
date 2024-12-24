@@ -24,11 +24,6 @@ char** getnics(int* count);
 
 int main(int argc, char **argv)
 {
-	struct user_config cfg = {
-		.unload = false,
-		.flush_hook = false,
-	};
-	
 	struct tc_kern *skel;
 	int err, key, map_fd;
 	int count = 0;
