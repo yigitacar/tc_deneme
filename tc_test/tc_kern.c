@@ -14,7 +14,7 @@ struct {
 	__uint(max_entries, MAX_INTERFACE);
 } interface_map SEC(".maps");
 
-SEC("tc")
+SEC("classifier")
 int tc_egress_multiplicate(struct __sk_buff *skb) {
     __u32 key = 0;
     __u32 *ifindex;
