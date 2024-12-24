@@ -9,6 +9,10 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <linux/if_link.h>
+#include <linux/bpf.h>
+
+#include <bpf/libbpf.h>
+#include <bpf/bpf.h>
 
 #define EGRESS_HANDLE		0x1;
 #define EGRESS_PRIORITY 	0xC02F;
@@ -27,6 +31,7 @@ static int verbose = 1;
 
 #define BPF_PROG_PATH "tc_kern.o" // Path to compiled eBPF program
 
+int tc_attach_egress(struct user_config *cfg, struct tc_kern *skel);
 char** getnics(int* count);
 
 int main(int argc, char **argv)

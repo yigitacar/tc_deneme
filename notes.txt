@@ -16,36 +16,5 @@ bpf lifecycle:
 
 
 ERROR:
-tc_userspace.c:17:21: error: ‘IF_NAMESIZE’ undeclared here (not in a function)
-   17 |         char ifname[IF_NAMESIZE+1];
-      |                     ^~~~~~~~~~~
-tc_userspace.c:18:9: error: unknown type name ‘bool’
-   18 |         bool unload;
-      |         ^~~~
-tc_userspace.c:19:9: error: unknown type name ‘bool’
-   19 |         bool flush_hook;
-      |         ^~~~
-tc_userspace.c: In function ‘main’:
-tc_userspace.c:33:16: error: parameter ‘cfg’ is initialized
-   33 |         struct user_config cfg = {
-      |                ^~~~~~~~~~~
-tc_userspace.c:31:5: error: old-style parameter declarations in prototyped function definition
-   31 | int main(int argc, char **argv)
-      |     ^~~~
-tc_userspace.c:74:31: warning: implicit declaration of function ‘if_nametoindex’ [-Wimplicit-function-declaration]
-   74 |                 __u32 value = if_nametoindex(card_data[i]);  // System-assigned ifindex
-      |                               ^~~~~~~~~~~~~~
-tc_userspace.c:81:23: warning: implicit declaration of function ‘bpf_map_update_elem’ [-Wimplicit-function-declaration]
-   81 |                 err = bpf_map_update_elem(map_fd, &key, &value, BPF_ANY);
-      |                       ^~~~~~~~~~~~~~~~~~~
-tc_userspace.c:89:11: warning: implicit declaration of function ‘tc_attach_egress’ [-Wimplicit-function-declaration]
-   89 |     err = tc_attach_egress(&cfg, skel);
-      |           ^~~~~~~~~~~~~~~~
-tc_userspace.c:89:29: error: ‘cfg’ undeclared (first use in this function)
-   89 |     err = tc_attach_egress(&cfg, skel);
-      |                             ^~~
-tc_userspace.c:89:29: note: each undeclared identifier is reported only once for each function it appears in
-tc_userspace.c: In function ‘tc_attach_egress’:
-tc_userspace.c:120:30: error: ‘obj’ undeclared (first use in this function)
-  120 |         fd = bpf_program__fd(obj->progs.tc_egress_multiplicate);
+
 
