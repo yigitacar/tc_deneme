@@ -200,6 +200,26 @@ int tc_detach_egress(struct user_config *cfg)
 	return err;
 }
 
+int teardown_hook(struct user_config *cfg)
+{
+	DECLARE_LIBBPF_OPTS(bpf_tc_hook, hook,
+			    .attach_point = BPF_TC_EGRESS,
+			    .ifindex = cfg->ifindex);
+	int err;
+
+	/* When destroying the hook, any and ALL attached TC-BPF (filter)
+	 * programs are also detached.
+	 */
+	err = bpf_tc_hook_destroy(&hook);
+	if (err)
+		fprintf(stderr, "Couldn't remove clsact qdisc on %s\n", cfg->ifname);
+
+	if (verbose)
+		printf("Flushed all TC-BPF egress programs (via destroy hook)\n");
+
+	return err;
+}
+
 char** getnics(int* count)
 {
     struct ifaddrs *ifaddr, *ifa;
