@@ -9,6 +9,19 @@
 #include <unistd.h>
 #include <linux/if_link.h>
 
+#define EGRESS_HANDLE		0x1;
+#define EGRESS_PRIORITY 	0xC02F;
+
+struct user_config {
+	int ifindex;
+	char ifname[IF_NAMESIZE+1];
+	bool unload;
+	bool flush_hook;
+};
+
+static int verbose = 1;
+
+
 #include "tc_kern.skel.h"
 
 #define BPF_PROG_PATH "tc_kern.o" // Path to compiled eBPF program
