@@ -5,6 +5,8 @@
 
 #define MAX_INTERFACE 10
 
+int tc_egress_multiplicate(struct __sk_buff *skb);
+
 struct {
 	__uint(type, BPF_MAP_TYPE_ARRAY);
 	__type(key, __u32);
