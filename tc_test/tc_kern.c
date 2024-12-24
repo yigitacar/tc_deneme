@@ -1,4 +1,5 @@
 #include <linux/pkt_cls.h>
+#include <linux/pkt_sched.h>
 #include <linux/in.h>
 #include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
@@ -14,8 +15,8 @@ struct {
 	__uint(max_entries, MAX_INTERFACE);
 } interface_map SEC(".maps");
 
-SEC("classifier")
-//SEC("tc")
+//SEC("classifier")
+SEC("tc")
 int tc_egress_multiplicate(struct __sk_buff *skb) {
     __u32 key = 0;
     __u32 *ifindex;

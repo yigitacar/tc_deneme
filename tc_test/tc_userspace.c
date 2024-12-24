@@ -16,6 +16,11 @@
 char** getnics(int* count);
 
 int main(int argc, char **argv)
+
+	struct user_config cfg = {
+		.unload = false,
+		.flush_hook = false,
+	};
 {
 	struct tc_kern *skel;
 	int err, key, map_fd;
@@ -68,12 +73,18 @@ int main(int argc, char **argv)
 	}
 	
 	/* Attach tracepoint */
-    err = tc_kern__attach(skel);
+    err = tc_attach_egress(&cfg, skel);
     if (err) {
         fprintf(stderr, "Failed to attach BPF skeleton\n");
         goto cleanup;
     }	
 
+/*    err = tc_kern__attach(skel);
+    if (err) {
+        fprintf(stderr, "Failed to attach BPF skeleton\n");
+        goto cleanup;
+    }	
+*/
 
 cleanup:
     for (int i = 0; i < count; i++) { 
@@ -83,6 +94,54 @@ cleanup:
 	
 	/* Detach BPF program and free up used resources */	
 	tc_kern__destroy(skel);
+}
+
+int tc_attach_egress(struct user_config *cfg, struct tc_kern *skel)
+{
+	int err = 0;
+	int fd;
+	
+	DECLARE_LIBBPF_OPTS(bpf_tc_hook, hook, .attach_point = BPF_TC_EGRESS);
+	DECLARE_LIBBPF_OPTS(bpf_tc_opts, attach_egress);
+
+	fd = bpf_program__fd(obj->progs.tc_egress_multiplicate);
+	if (fd < 0) {
+		fprintf(stderr, "Couldn't find egress program\n");
+		err = -ENOENT;
+		goto out;
+	}
+	attach_egress.prog_fd = fd;
+	
+	hook.ifindex = cfg->ifindex;
+
+	err = bpf_tc_hook_create(&hook);
+	if (err && err != -EEXIST) {
+		fprintf(stderr, "Couldn't create TC-BPF hook for "
+			"ifindex %d (err:%d)\n", cfg->ifindex, err);
+		goto out;
+	}
+	if (verbose && err == -EEXIST) {
+		printf("Success: TC-BPF hook already existed "
+		       "(Ignore: \"libbpf: Kernel error message\")\n");
+	}
+
+	hook.attach_point = BPF_TC_EGRESS;
+	attach_egress.flags    = BPF_TC_F_REPLACE;
+	attach_egress.handle   = EGRESS_HANDLE;
+	attach_egress.priority = EGRESS_PRIORITY;
+	err = bpf_tc_attach(&hook, &attach_egress);
+	if (err) {
+		fprintf(stderr, "Couldn't attach egress program to "
+			"ifindex %d (err:%d)\n", hook.ifindex, err);
+		goto out;
+	}
+
+	if (verbose) {
+		printf("Attached TC-BPF program id:%d\n",
+		       attach_egress.prog_id);
+	}
+out:
+	return err;	
 }
 
 
