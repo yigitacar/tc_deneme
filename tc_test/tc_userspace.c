@@ -19,7 +19,7 @@
 
 struct user_config {
 	int ifindex;
-//	char ifname[IF_NAMESIZE+1];
+	char ifname[4];
 	bool unload;
 	bool flush_hook;
 };
