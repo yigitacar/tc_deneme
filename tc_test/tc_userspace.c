@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <ifaddrs.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <linux/if_link.h>
 
@@ -14,7 +15,7 @@
 
 struct user_config {
 	int ifindex;
-	char ifname[IF_NAMESIZE+1];
+//	char ifname[IF_NAMESIZE+1];
 	bool unload;
 	bool flush_hook;
 };
@@ -29,12 +30,12 @@ static int verbose = 1;
 char** getnics(int* count);
 
 int main(int argc, char **argv)
-
+{
 	struct user_config cfg = {
 		.unload = false,
 		.flush_hook = false,
 	};
-{
+	
 	struct tc_kern *skel;
 	int err, key, map_fd;
 	int count = 0;
@@ -117,7 +118,7 @@ int tc_attach_egress(struct user_config *cfg, struct tc_kern *skel)
 	DECLARE_LIBBPF_OPTS(bpf_tc_hook, hook, .attach_point = BPF_TC_EGRESS);
 	DECLARE_LIBBPF_OPTS(bpf_tc_opts, attach_egress);
 
-	fd = bpf_program__fd(obj->progs.tc_egress_multiplicate);
+	fd = bpf_program__fd(skel->progs.tc_egress_multiplicate);
 	if (fd < 0) {
 		fprintf(stderr, "Couldn't find egress program\n");
 		err = -ENOENT;

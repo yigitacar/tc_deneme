@@ -16,60 +16,36 @@ bpf lifecycle:
 
 
 ERROR:
-tc_userspace.c:20:16: error: parameter ‘cfg’ is initialized
-   20 |         struct user_config cfg = {
+tc_userspace.c:17:21: error: ‘IF_NAMESIZE’ undeclared here (not in a function)
+   17 |         char ifname[IF_NAMESIZE+1];
+      |                     ^~~~~~~~~~~
+tc_userspace.c:18:9: error: unknown type name ‘bool’
+   18 |         bool unload;
+      |         ^~~~
+tc_userspace.c:19:9: error: unknown type name ‘bool’
+   19 |         bool flush_hook;
+      |         ^~~~
+tc_userspace.c: In function ‘main’:
+tc_userspace.c:33:16: error: parameter ‘cfg’ is initialized
+   33 |         struct user_config cfg = {
       |                ^~~~~~~~~~~
-tc_userspace.c:21:18: error: ‘struct user_config’ has no member named ‘unload’
-   21 |                 .unload = false,
-      |                  ^~~~~~
-tc_userspace.c:21:27: warning: excess elements in struct initializer
-   21 |                 .unload = false,
-      |                           ^~~~~
-tc_userspace.c:21:27: note: (near initialization for ‘cfg’)
-tc_userspace.c:22:18: error: ‘struct user_config’ has no member named ‘flush_hook’
-   22 |                 .flush_hook = false,
-      |                  ^~~~~~~~~~
-tc_userspace.c:22:31: warning: excess elements in struct initializer
-   22 |                 .flush_hook = false,
-      |                               ^~~~~
-tc_userspace.c:22:31: note: (near initialization for ‘cfg’)
-tc_userspace.c:18:5: error: old-style parameter declarations in prototyped function definition
-   18 | int main(int argc, char **argv)
+tc_userspace.c:31:5: error: old-style parameter declarations in prototyped function definition
+   31 | int main(int argc, char **argv)
       |     ^~~~
-tc_userspace.c:61:31: warning: implicit declaration of function ‘if_nametoindex’ [-Wimplicit-function-declaration]
-   61 |                 __u32 value = if_nametoindex(card_data[i]);  // System-assigned ifindex
+tc_userspace.c:74:31: warning: implicit declaration of function ‘if_nametoindex’ [-Wimplicit-function-declaration]
+   74 |                 __u32 value = if_nametoindex(card_data[i]);  // System-assigned ifindex
       |                               ^~~~~~~~~~~~~~
-tc_userspace.c:68:23: warning: implicit declaration of function ‘bpf_map_update_elem’ [-Wimplicit-function-declaration]
-   68 |                 err = bpf_map_update_elem(map_fd, &key, &value, BPF_ANY);
+tc_userspace.c:81:23: warning: implicit declaration of function ‘bpf_map_update_elem’ [-Wimplicit-function-declaration]
+   81 |                 err = bpf_map_update_elem(map_fd, &key, &value, BPF_ANY);
       |                       ^~~~~~~~~~~~~~~~~~~
-tc_userspace.c:76:11: warning: implicit declaration of function ‘tc_attach_egress’ [-Wimplicit-function-declaration]
-   76 |     err = tc_attach_egress(&cfg, skel);
+tc_userspace.c:89:11: warning: implicit declaration of function ‘tc_attach_egress’ [-Wimplicit-function-declaration]
+   89 |     err = tc_attach_egress(&cfg, skel);
       |           ^~~~~~~~~~~~~~~~
-tc_userspace.c:76:29: error: ‘cfg’ undeclared (first use in this function)
-   76 |     err = tc_attach_egress(&cfg, skel);
+tc_userspace.c:89:29: error: ‘cfg’ undeclared (first use in this function)
+   89 |     err = tc_attach_egress(&cfg, skel);
       |                             ^~~
-tc_userspace.c:76:29: note: each undeclared identifier is reported only once for each function it appears in
-tc_userspace.c: At top level:
-tc_userspace.c:99:29: warning: ‘struct user_config’ declared inside parameter list will not be visible outside of this definition or declaration
-   99 | int tc_attach_egress(struct user_config *cfg, struct tc_kern *skel)
-      |                             ^~~~~~~~~~~
+tc_userspace.c:89:29: note: each undeclared identifier is reported only once for each function it appears in
 tc_userspace.c: In function ‘tc_attach_egress’:
-tc_userspace.c:107:30: error: ‘obj’ undeclared (first use in this function)
-  107 |         fd = bpf_program__fd(obj->progs.tc_egress_multiplicate);
-      |                              ^~~
-tc_userspace.c:115:27: error: invalid use of undefined type ‘struct user_config’
-  115 |         hook.ifindex = cfg->ifindex;
-      |                           ^~
-tc_userspace.c:120:53: error: invalid use of undefined type ‘struct user_config’
-  120 |                         "ifindex %d (err:%d)\n", cfg->ifindex, err);
-      |                                                     ^~
-tc_userspace.c:123:13: error: ‘verbose’ undeclared (first use in this function)
-  123 |         if (verbose && err == -EEXIST) {
-      |             ^~~~~~~
-tc_userspace.c:130:34: error: ‘EGRESS_HANDLE’ undeclared (first use in this function)
-  130 |         attach_egress.handle   = EGRESS_HANDLE;
-      |                                  ^~~~~~~~~~~~~
-tc_userspace.c:131:34: error: ‘EGRESS_PRIORITY’ undeclared (first use in this function); did you mean ‘SO_PRIORITY’?
-  131 |         attach_egress.priority = EGRESS_PRIORITY;
-      |                                  ^~~~~~~~~~~~~~~
-      |                                  SO_PRIORITY
+tc_userspace.c:120:30: error: ‘obj’ undeclared (first use in this function)
+  120 |         fd = bpf_program__fd(obj->progs.tc_egress_multiplicate);
+
