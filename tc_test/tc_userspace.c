@@ -163,6 +163,42 @@ out:
 	return err;	
 }
 
+int tc_detach_egress(struct user_config *cfg)
+{
+	int err;
+	DECLARE_LIBBPF_OPTS(bpf_tc_hook, hook, .ifindex = cfg->ifindex,
+			    .attach_point = BPF_TC_EGRESS);
+	DECLARE_LIBBPF_OPTS(bpf_tc_opts, opts_info);
+
+	opts_info.handle   = EGRESS_HANDLE;
+	opts_info.priority = EGRESS_PRIORITY;
+
+	/* Check what program we are removing */
+	err = bpf_tc_query(&hook, &opts_info);
+	if (err) {
+		fprintf(stderr, "No egress program to detach "
+			"for ifindex %d (err:%d)\n", cfg->ifindex, err);
+		return err;
+	}
+	if (verbose)
+		printf("Detaching TC-BPF prog id:%d\n", opts_info.prog_id);
+
+	/* Attempt to detach program */
+	opts_info.prog_fd = 0;
+	opts_info.prog_id = 0;
+	opts_info.flags = 0;
+	err = bpf_tc_detach(&hook, &opts_info);
+	if (err) {
+		fprintf(stderr, "Cannot detach TC-BPF program id:%d "
+			"for ifindex %d (err:%d)\n", opts_info.prog_id,
+			cfg->ifindex, err);
+	}
+
+	if (cfg->flush_hook)
+		return teardown_hook(cfg);
+
+	return err;
+}
 
 char** getnics(int* count)
 {
