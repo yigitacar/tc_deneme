@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     err = tc_kern__load(skel);
     if (err) {
         fprintf(stderr, "Failed to load and verify BPF skeleton\n");
-    //    goto cleanup;
+        goto cleanup;
     }	
 
 	map_fd = bpf_map__fd(skel->maps.interface_map);
@@ -71,20 +71,18 @@ int main(int argc, char **argv)
     err = tc_kern__attach(skel);
     if (err) {
         fprintf(stderr, "Failed to attach BPF skeleton\n");
-    //    goto cleanup;
+        goto cleanup;
     }	
 
-	/* Detach BPF program and free up used resources */	
-	/*  
-	tc_kern__destroy(skel);
-	*/
 
+cleanup:
     for (int i = 0; i < count; i++) { 
         free(card_data[i]);
     }
+	free(card_data);
 	
-    free(card_data);
-	return 0;
+	/* Detach BPF program and free up used resources */	
+	tc_kern__destroy(skel);
 }
 
 

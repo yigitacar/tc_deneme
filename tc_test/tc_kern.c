@@ -15,6 +15,7 @@ struct {
 } interface_map SEC(".maps");
 
 SEC("classifier")
+//SEC("tc")
 int tc_egress_multiplicate(struct __sk_buff *skb) {
     __u32 key = 0;
     __u32 *ifindex;
