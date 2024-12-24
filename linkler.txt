@@ -19,6 +19,7 @@
 -tc direct action mode for ebpf: https://qmonnet.github.io/whirl-offload/2020/04/11/tc-bpf-direct-action/
 -net/if.h docu: https://pubs.opengroup.org/onlinepubs/009695399/basedefs/net/if.h.html
 		https://gist.github.com/rootVIII/99c59623b809d28207804178a10804c0
+-libbpf source code: https://github.com/libbpf/libbpf/blob/v1.2.2/src/libbpf.c
 
 https://stackoverflow.com/questions/77193520/how-do-i-activate-a-bcc-ebpf-program-that-modifies-outgoing-egress-network-traff
 

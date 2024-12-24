@@ -16,5 +16,10 @@ bpf lifecycle:
 
 
 ERROR:
-
+bat0
+libbpf: prog 'tc_egress_multiplicate': missing BPF prog type, check ELF section name 'tc'
+libbpf: failed to load program 'tc_egress_multiplicate'
+libbpf: failed to load object 'tc_kern'
+libbpf: failed to load BPF skeleton 'tc_kern': -22
+Failed to load and verify BPF skeleton
 
