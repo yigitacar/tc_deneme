@@ -1,14 +1,12 @@
-#include <linux/icmp.h>
-#include <linux/if_ether.h>
-#include <linux/ip.h>
 #include <linux/pkt_cls.h>
+#include <linux/pkt_sched.h>
 #include <linux/in.h>
 #include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
 
-#define TC_ACT_OK 0
-#define TC_ACT_SHOT 1
 #define MAX_INTERFACE 10
+
+int tc_egress_multiplicate(struct __sk_buff *skb);
 
 struct {
 	__uint(type, BPF_MAP_TYPE_ARRAY);
@@ -18,6 +16,7 @@ struct {
 } interface_map SEC(".maps");
 
 SEC("classifier")
+//SEC("tc")
 int tc_egress_multiplicate(struct __sk_buff *skb) {
     __u32 key = 0;
     __u32 *ifindex;
