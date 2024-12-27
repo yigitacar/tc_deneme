@@ -118,7 +118,7 @@ char** getnics(int* count)
             continue;
 
         // Check if interface is already in the list
-        int duplicate = 0;l
+        int duplicate = 0;
         for (int i = 0; i < index; i++) {
             if (strcmp(details[i], ifa->ifa_name) == 0) {
                 duplicate = 1;
