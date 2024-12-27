@@ -1,12 +1,26 @@
 -old: clang -I/usr/include/bpf -O2 -target bpf -c your_program.c -o your_program.o
 -current compilation:
-	clang -O2 -g -target bpf -c redirect_egress.c -o redirect_egress.o
-	gcc -o load_redirect load_redirect.c -lbpf
-	sudo ./load_redirect
+	clang -O2 -g -target bpf -c tc_kern.c -o tc_kern.o
+	bpftool gen skeleton tc_kern.o > tc_kern.skel.h
+	gcc -o tc_userspace tc_userspace.c -lbpf
+	sudo ./tc_userspace
 
--generate skeleton: bpftool gen skeleton tc_kern.o > tc_kern.skel.h
+-add tc hook:
+	tc qdisc add dev <interface> clsact
+	tc filter add dev <interface> egress bpf da obj tc_kern.o (optional: sec classifier)
+-check and verify tc hook:
+	tc qdisc show dev <interface>
+	tc filter show dev <interface> egress / tc filter list dev <interface> egress
+	bpftool prog show
+-delete/teardown tc hook:
+	tc qdisc delete dev <interface> clsact
+-reload tc hook:
+	tc filter replace dev <interface> egress prio 0xC000 handle 1 bpf da obj tc_kern.o
 
-bpftool prog show
+-tcpdump:
+	Capture Packets from Specific Interface: tcpdump -i eth0 icmp
+	Display Available Interfaces: tcpdump -D
+	Capture Packets from source IP: tcpdump -i eth0 src 10.1.20.10
 
 bpf lifecycle:
 -open phase

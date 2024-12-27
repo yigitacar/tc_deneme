@@ -1,8 +1,10 @@
+-ebpf reading list: https://qmonnet.github.io/whirl-offload/2016/09/01/dive-into-bpf/#about-tc
 -bcc tutorial: https://eunomia.dev/tutorials/1-helloworld/#installing-the-necessary-software-and-tools
 -ubuntu bpf setup: https://thegraynode.io/posts/bpf_dev_env/
 -ubuntu bcc setup: https://www.flamingbytes.com/blog/how-to-install-bcc-on-ubuntu-22-04/
 -video example: https://www.youtube.com/watch?v=lrSExTfS-iQ&list=PLDX-f9ry9CQIASlBBlrlY06Tgnh4gLThn&index=1
--tc filters: https://fedepaol.github.io/blog/2023/04/06/ebpf-tc-filters-for-egress-traffic/
+-tc filters: http://linux-ip.net/articles/Traffic-Control-HOWTO/
+	     https://fedepaol.github.io/blog/2023/04/06/ebpf-tc-filters-for-egress-traffic/
 -bpf reference guide: https://docs.cilium.io/en/stable/reference-guides/bpf/index.html
 -bcc documentation: https://github.com/iovisor/bcc/blob/master/docs/reference_guide.md#1-kprobes
 		    https://bcc.readthedocs.io/en/stable/
@@ -20,6 +22,9 @@
 -net/if.h docu: https://pubs.opengroup.org/onlinepubs/009695399/basedefs/net/if.h.html
 		https://gist.github.com/rootVIII/99c59623b809d28207804178a10804c0
 -libbpf source code: https://github.com/libbpf/libbpf/blob/v1.2.2/src/libbpf.c
+-examples:
+	https://github.com/xdp-project
+
 
 https://stackoverflow.com/questions/77193520/how-do-i-activate-a-bcc-ebpf-program-that-modifies-outgoing-egress-network-traff
 
