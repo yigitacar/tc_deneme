@@ -18,6 +18,7 @@ struct {
 SEC("classifier")
 //SEC("tc")
 int tc_egress_multiplicate(struct __sk_buff *skb) {
+
     __u32 key = 0;
     __u32 *ifindex;
 	
@@ -25,7 +26,7 @@ int tc_egress_multiplicate(struct __sk_buff *skb) {
     for (int i = 0; i < MAX_INTERFACE; i++) {
         ifindex = bpf_map_lookup_elem(&interface_map, &key);
 		
-		//bpf_printk("interface: %u \n", ifindex);
+		bpf_trace_printk("interface: %u \n", ifindex);
 		
 		if (!ifindex)
 			continue;
