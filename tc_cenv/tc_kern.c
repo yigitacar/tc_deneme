@@ -3,6 +3,7 @@
 #include <linux/in.h>
 #include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
+#include <bpf/bpf_tracing.h>
 
 #define MAX_INTERFACE 10
 
